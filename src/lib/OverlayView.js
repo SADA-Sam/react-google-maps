@@ -125,12 +125,13 @@ export default _.flowRight(
   },
 
   onRemove() {
+    this._debouncedDraw.cancel();
     helpers.unmountAndDestroyContainerElement(this._containerElement);
     this._containerElement = null;
   },
 
   componentDidUpdate() {
-    _.delay(this.draw)
+    this._debouncedDraw = _.debounce(this.draw);
   },
 
   componentWillUnmount() {
